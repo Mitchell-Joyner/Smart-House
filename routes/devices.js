@@ -1,5 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const redis = require('redis');
+
+client.on('connect',function(){
+  console.log("You did it! You did it! You did it! Yay! (Lo hiciste!)");
+});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -25,7 +30,6 @@ router.get('/all',function(req, res, next){
         }
     });
 });
-
 
 
 
