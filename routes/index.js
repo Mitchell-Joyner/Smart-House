@@ -14,36 +14,6 @@ router.get('/', function(req, res, next) {
     res.render('index', { title: 'the devices page', otherthing:"otherstring"});
 });
 
-router.get('/all_devices',function(req, res, next){
-
-    client.keys('device*', function(err, data){
-        if(err){
-            console.log(err);
-        }
-        else{
-            let devicelist = {};
-
-            for(let d=0; d<data.length; d++){
-                let item = "dvc"+d;
-                devicelist[item] = data[d];
-            }
-            res.render('devices', devicelist);
-            console.log(data);
-        }
-    });
-});
-
-router.get('/add', function(req, res, next) {
-    res.render('add');
-});
-
-router.get('/lights', function(req, res, next) {
-    res.render('lights');
-});
-
-router.post('/add', function(req, res, next) {
-    res.render('add');
-});
 
 router.post('/search/',function (req, res, next){
     let id = "device"+req.body.id;
