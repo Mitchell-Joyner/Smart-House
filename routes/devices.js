@@ -45,7 +45,7 @@ router.get('/goto/:id',function (req, res){
         else{
             console.log(obj);
             obj.id = "device"+req.params.id;
-            res.render('devices',{
+            res.render('device',{
                 device:obj
             });
         }
