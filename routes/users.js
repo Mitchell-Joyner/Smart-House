@@ -35,26 +35,6 @@ router.post('/add', function(req, res, next) {
     })
 });
 
-router.get('/goto/:id',function (req, res){
-    let id = req.params.id;
-    client.hgetall(id,function(err,obj){
-        if(!obj){
-            console.log(id);
-            res.render('index',{
-                error: 'device does not exist',
-                title: 'NO!'
-            });
-        }
-        else{
-            console.log(obj);
-            obj.id = "device"+req.params.id;
-            res.render('devices',{
-                device:obj
-            });
-        }
-    })
-});
-
 router.delete('/delete/:id',function(req,res){
     client.del(req.params.id);
     res.redirect('/')

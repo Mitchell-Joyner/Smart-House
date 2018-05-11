@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const redis = require('redis');
 
+let client  = redis.createClient();
+
 client.on('connect',function(){
   console.log("You did it! You did it! You did it! Yay! (Lo hiciste!)");
 });
@@ -10,7 +12,6 @@ client.on('connect',function(){
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express JS Event Log' });
 });
-
 
 router.get('/all',function(req, res, next){
 
@@ -25,13 +26,30 @@ router.get('/all',function(req, res, next){
                 let item = "dvc"+d;
                 devicelist[item] = data[d];
             }
-            res.render('alldevices', devicelist);
+            res.render('devices', devicelist);
             console.log(data);
         }
     });
 });
 
-
-
+router.get('/goto/:id',function (req, res){
+    let id = req.params.id;
+    client.hgetall(id,function(err,obj){
+        if(!obj){
+            console.log(id);
+            res.render('index',{
+                error: 'device does not exist',
+                title: 'NO!'
+            });
+        }
+        else{
+            console.log(obj);
+            obj.id = "device"+req.params.id;
+            res.render('devices',{
+                device:obj
+            });
+        }
+    })
+});
 
 module.exports = router;
